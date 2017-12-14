@@ -324,7 +324,10 @@ export default {
     }
   },
   created:function() {
-      this.user=JSON.parse(sessionStorage.user);
+      if(sessionStorage.user){
+          this.user=JSON.parse(sessionStorage.user);
+      }
+      
       $(window).scrollTop(0);
 		//批量请求数据
 		this.$http.all([this.seckill(), this.cateBox(),this.youLike()]).then(this.$http.spread((res1, res2,res3)=>{
