@@ -391,7 +391,7 @@ export default {
 			return this.$http.get("./static/json/GetHomeFloorAdView.json");
 		},
 		youLike(){
-			return this.$http.get("http://127.0.0.1:8888/getGoodList", {
+			return this.$http.get("http://10.0.154.212:8888/getGoodList", {
 			});
 		},
 		//咨询

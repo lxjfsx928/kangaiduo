@@ -71,12 +71,12 @@
 		</div>
 		<div class="poput2">
 			<a href="###" class="poput_clik" @click="cut">x</a>
-			<p class="remove"><span></span>今天已经签到了</p>
+			<p class="remove"><span></span>签到成功</p>
 			<p class="btn"><a class="yes" @click="cut">确定</a><a class="cencel">查看积分</a></p>
 		</div>
 		<!-- <div class="poput3">
 			<a href="###" class="poput_clik" @click="cut">x</a>
-			<p class="remove"><span></span>今天已经签到了</p>
+			<p class="remove"><span></span>签到成功s</p>
 			<p class="btn"><a class="yes" @click="cut">确定</a><a class="cencel">查看积分</a></p>
 		</div> -->
 	</div>
@@ -89,11 +89,12 @@
 				date: {},
 				isEnter:false,
 				PersonalInfo: {}
+
 			}
 		},
 		created(){
 			$(window).scrollTop(0);
-			this.isEnter = this.$store.getters.getIsEnter;
+			this.isEnter = JSON.parse(sessionStorage.user).isEnter;
 			this.PersonalInfo = this.$store.getters.getPersonalInfo;
 			this.date = this.getDate();
 		},
@@ -102,6 +103,7 @@
 				if(this.isEnter == false){
 					$(".black, .poput").show();
 				}else{
+					
 					$(".black, .poput2").show();
 				}
 			},

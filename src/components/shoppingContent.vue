@@ -351,10 +351,12 @@
 			<div class="pro-footer-l">
 				<p><i class="i-img img1"></i><a href="#" class="i-img">电话咨询</a></p>
 				<p><i class="i-img img2"></i><a href="#" class="i-img">在线咨询</a></p>
-				<p><i class="i-img img3"></i><a href="#" class="i-img">购物车</a></p>
+				<router-link to="/shoppingCar">
+					<p><i class="i-img img3"></i><a href="#" class="i-img">购物车</a></p>
+				</router-link>
 			</div>
 			<div class="pro-footer-r">
-				<p class="addCar"><a href="#">加入购物车</a></p>
+				<p class="addCar" @tap="add()"><a href="#">加入购物车</a></p>
 				<p class="buy"><a href="#">立即购买</a></p>
 			</div>
 		</div>
@@ -372,11 +374,19 @@
 		methods:{
 			back(){
 				history.go(-1);
+			},
+			add(){
+				this.$http.get("http://10.0.154.212:8888/add",{
+				params:{
+					code:sessionStorage.code,
+					id:JSON.parse(sessionStorage.user).id
+				}
+			})
 			}
 		},
 		created(){
 			$(window).scrollTop(0);
-			this.$http.get("http://127.0.0.1:8888/getGoods",{
+			this.$http.get("http://10.0.154.212:8888/getGoods",{
 				params:{
 					code:sessionStorage.code
 				}

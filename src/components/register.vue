@@ -66,19 +66,28 @@ export default {
         this.userList = this.$store.getters.getUserList;
     },
     methods:{
-        register(){
-            if(this.userName()==true){
-                if($(".register-userName input").val()==""||$(".register-password input").val()==""){
-                    $(".register-outer-box").show();
-                    $(".register-inner-box div").text("用户名或密码不能为空。");
-                }
-                else{
-                    wvue.userList[$(".register-userName input").val()]=$(".register-password input").val();
-                    location.hash = "/index";
-                    this.$store.dispatch('addIsEnter', true);
-                }
-                if(this.$store.getters.getIsEnter) history.go(-1);
+        register(){ 
+            if($(".register-userName input").val()==""||$(".register-password input").val()==""){
+                $(".register-outer-box").show();
+                $(".register-inner-box div").text("用户名或密码不能为空。");
             }
+            else{
+                this.$http.get("http://10.0.154.212:8888/register",{
+                    params:{
+                        tel:$(".register-userName input").val(),
+                        pwd:$(".register-password input").val()
+                    }
+                }).then((res)=>{
+                if(res.data.isEnter==true){
+                    sessionStorage.user=res.data;
+                     location.hash = "/index";
+                }else{
+                    $(".register-outer-box").show();
+                    $(".register-inner-box div").text("该手机号已经存在。");
+                }
+                })
+            }
+
         },
         userName(){
             if(this.userList[$(".register-userName input").val()]===undefined){

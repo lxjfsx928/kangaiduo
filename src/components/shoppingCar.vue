@@ -18,7 +18,7 @@
                             ￥{{item.sale_price}}
                         </div>
                         <div class="shopping-goods-count">
-                            <a href="javascript:void(0)" @click="item.count--;if(item.count<=0) item.count=0;">-</a><input type="text" :value="item.count" v-model="item.count"><a href="javascript:void(0)" @click="item.count++;">+</a>
+                            <a href="javascript:void(0)" @click="count('-',item)">-</a><input type="text"  v-model="item.count"><a href="javascript:void(0)" @click="count('+',item)">+</a>
                         </div>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
                 <p>总计：<span>{{totalPrice}}</span></p>
                 <span>改订单已包邮</span>
             </div>
-            <div class="shopping-btn"><router-link to="/enterOrder" @tap="getShop">去结算</router-link></div>
+            <div class="shopping-btn"><router-link to="/enterOrder">去结算</router-link></div>
         </div>
     </div>
 </template>
@@ -44,27 +44,38 @@ export default {
         shoppingCarList:[]
         }
     },
-    beforeCreate(){
+    created(){
         if(sessionStorage.user){
-            this.$http.get("http://127.0.0.1:8888/shoppingcar",{
+            this.$http.get("http://10.0.154.212:8888/shoppingcar",{
                 params:{
                     id:JSON.parse(sessionStorage.user).id
                 }
             }).then(res=>{
                 this.shoppingCarList=res.data;
             })
+        }else{
+            location.hash="/enter"
         }
-    },
-    created(){
        $(window).scrollTop(0);
-       this.compute;
     },
     methods:{
         back(){
             history.back();
         },
-        getShop(){
-            wbus.$emit("shopChange",this.shoppingCarList)
+        count(code,item){
+            var e="item.count"+code+code;
+            // eval("item.count"+code+code)
+            eval(e);
+            if(item.count<=0){
+                item.count=0;
+            }
+            this.$http.get("http://127.0.0.1:8888/cartCount",{
+				params:{
+                    id:JSON.parse(sessionStorage.user).id,
+                    code:item.code,
+                    count:item.count                                                          
+				}
+			})
         }
     },
     computed:{

@@ -64,7 +64,7 @@
                 <p>总计：<span>￥{{orderCount+15}}</span></p>
             </div>
             <router-link to="/submitOrder">
-            <div class="enterOrder-btn">提交订单</div>
+            <div class="enterOrder-btn" @tap="submit">提交订单</div>
             </router-link>
         </div>
     </div>
@@ -73,15 +73,15 @@
 <script>
 export default {
    name:'enterOrder',
-    date(){
+    data(){
         return{
             shoppingCarList:[],
             personalInfo:[]
         }
     },
-    beforeCreate(){
+    created(){
         if(sessionStorage.user){
-            this.$http.get("http://127.0.0.1:8888/shoppingcar",{
+            this.$http.get("http://10.0.154.212:8888/shoppingcar",{
                 params:{
                     id:JSON.parse(sessionStorage.user).id
                 }
@@ -89,15 +89,14 @@ export default {
                 this.shoppingCarList=res.data;
             })
         }
-    },
-    created:function(){
-        
-        // $(window).scrollTop(0);
+        $(window).scrollTop(0);
         // this.personalInfo = this.$store.getters.getPersonalInfo;
         // console.log(this.personalInfo)
     },
     methods:{
-       
+       submit(){
+           
+       }
     },
     computed:{
         orderCount:function(){

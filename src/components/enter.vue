@@ -72,7 +72,7 @@ export default {
     },
   methods:{
         enter(){
-            this.$http.get('http://127.0.0.1:8888/enter',{
+            this.$http.get('http://10.0.154.212:8888/enter',{
                 params:{
                     tel:$('.enter-userName input').val(),
                     pwd:$('.enter-password input').val()
